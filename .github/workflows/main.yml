@@ -27,5 +27,4 @@ jobs:
         # uses: docker/build-push-action@41a004098f667d254862fb7c94f8eb7b5f8bb31d
         uses: docker/build-push-action@v2.0.1
         with:
-          platforms: windows
           push: true
