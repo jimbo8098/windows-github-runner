@@ -26,7 +26,9 @@ jobs:
         run: docker build . -t github-runner:latest
 
       - name: Docker login
-        run: echo {{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u jimbo8098 --password-stdin
+        run: |
+          $Env:Token = {{ github.token }}
+          echo $Env:Token | docker login ghcr.io -u jimbo8098 --password-stdin
 
       - name: Push image
         run: docker push github-runner:latest
