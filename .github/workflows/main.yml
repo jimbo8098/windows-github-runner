@@ -10,6 +10,14 @@ on:
   pull_request:
     branches: [ master ]
 
+env:
+  # TODO: Change variable to your image's name.
+  IMAGE_NAME: docker-github-runner
+  REPO_OWNER: ${{ github.repository_owner }}
+  CR_HOST: ""
+  CR_PAT: ${{ secrets.CR_PAT }}
+  CR_USER: ${{ secrets.CR_USER }}
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -22,13 +30,16 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      - name: Log into Dockerhub
+        run: |
+          $Env:Token = ${{ secrets.CR_PAT }}
+          echo $Env:Token | docker login -u ${{ secrets.CR_USER }} -p ${{ secrets.CR_PAT }}
+
       - name: Build Docker image
         run: docker build . -t github-runner:latest
 
-      - name: Docker login
-        run: |
-          $Env:Token = {{ github.token }}
-          echo $Env:Token | docker login ghcr.io -u jimbo8098 --password-stdin
-
       - name: Push image
         run: docker push github-runner:latest
+
+
+
