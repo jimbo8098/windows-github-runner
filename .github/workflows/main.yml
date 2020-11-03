@@ -22,5 +22,11 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: Build and push Docker images
-        run: docker build .
+      - name: Build Docker image
+        run: docker build . -t github-runner:latest
+
+      - name: Docker login
+        run: echo {{ github.token }} | docker login ghcr.io -u jimbo8098 --password-stdin
+
+      - name: Push image
+        run: docker push github-runner:latest
