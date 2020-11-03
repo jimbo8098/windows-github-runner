@@ -32,7 +32,7 @@ jobs:
 
       - name: Log into Dockerhub
         run: |
-          echo $Env:CR_PAT | docker login -u ${{ secrets.CR_USER }} -p ${{ secrets.CR_PAT }}
+          echo $Env:CR_PAT | docker login -u ${{ secrets.CR_USER }} --password-stdin
 
       - name: Build Docker image
         run: docker build . -t github-runner:latest
