@@ -1,4 +1,4 @@
 echo $Env:RUNNERURL
 echo $Env:RUNNERTOKEN
-./config.md --url $Env:RUNNERURL --token $Env:RUNNERTOKEN
-./run.cmd
+./actions-runner/config.md --url $Env:RUNNERURL --token $Env:RUNNERTOKEN
+./actions-runner/run.cmd
