@@ -14,7 +14,7 @@ env:
   # TODO: Change variable to your image's name.
   IMAGE_NAME: docker-github-runner
   REPO_OWNER: ${{ github.repository_owner }}
-  CR_HOST: ""
+  CR_HOST: "ghcr.io"
   CR_PAT: ${{ secrets.CR_PAT }}
   CR_USER: ${{ secrets.CR_USER }}
 
@@ -32,13 +32,13 @@ jobs:
 
       - name: Log into Dockerhub
         run: |
-          docker login ghcr.io -u ${{ secrets.CR_USER }} -p ${{ secrets.CR_PAT }}
+          docker login "${Env:CR_HOST}" -u ${{ secrets.CR_USER }} -p ${{ secrets.CR_PAT }}
 
       - name: Build Docker image
-        run: docker build . -t github-runner:latest
+        run: docker build . -t "${Env:CR_HOST}/${Env:REPO_OWNER}/${Env:IMAGE_NAME}:latest"
 
       - name: Push image
-        run: docker push github-runner:latest
+        run: docker push "${Env:CR_HOST}/${Env:REPO_OWNER}/${Env:IMAGE_NAME}:latest"
 
 
 
