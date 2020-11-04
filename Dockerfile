@@ -3,5 +3,6 @@ ENV RUNNERTOKEN=""
 ENV RUNNERURL=""
 SHELL ["powershell","-command"]
 COPY actions-runner actions-runner
-COPY start.ps1 start.ps1
+COPY start.ps1 action-runner/start.ps1
+WORKDIR action-runner
 ENTRYPOINT ./start.ps1
