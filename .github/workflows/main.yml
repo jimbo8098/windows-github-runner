@@ -32,7 +32,7 @@ jobs:
 
       - name: Log into Dockerhub
         run: |
-          docker login ghcr.io -u ${{ secrets.CR_USER }} -p ${{ secrets.CR_PAT }}
+          echo | set /p="${{ secrets.CR_PAT }}" | docker login ghcr.io -u ${{ secrets.CR_USER }} --password-stdin
 
       - name: Build Docker image
         run: docker build . -t github-runner:latest
